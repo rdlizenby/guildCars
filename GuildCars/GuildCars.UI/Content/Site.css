@@ -1,0 +1,87 @@
+﻿
+a {
+    color:black;
+}
+
+.address {
+    margin-bottom:0px;
+}
+
+.body-content {
+    padding-top: 40px;
+}
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+.featuredDiv, .search-form {
+    border: 4px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.featuredListingImage {
+    max-width: 100%;
+    height:auto;
+}
+
+.dollar {
+    max-width: 100%;
+}
+
+.special, .car-detail-box {
+    border: 4px solid black;
+}
+
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+    .tg td {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        padding: 5px 2px;
+        overflow: hidden;
+        word-break: normal;
+    }
+
+    .tg .tg-0ord {
+        text-align: right
+    }
+
+    .tg .tg-lqy6 {
+        text-align: right;
+        vertical-align: top
+    }
+
+    .tg .tg-yw4l {
+        vertical-align: top
+    }
+
+@media screen and (max-width: 767px) {
+    .tg {
+        width: auto !important;
+    }
+
+        .tg col {
+            width: auto !important;
+        }
+
+    .tg-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+#map_canvas img {
+    max-width: none
+}
+
+.infoDiv {
+    height: 200px;
+    width: 300px;
+    -webkit-user-select: none;
+    background-color: white;
+}
+

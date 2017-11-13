@@ -1,0 +1,45 @@
+﻿@model GuildCars.Models.Tables.ContactRequest
+
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+<div class="container">
+    <h2>Contact Us</h2>
+    <div class="row">
+        <div class="col-md-4">
+            @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+            {
+                @Html.ValidationSummary(false)
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>                
+                        @Html.TextAreaFor(m => m.Message, new { @class = "from-control", @style = "height:200px;width:100%" })               
+                </div>
+                <input type="submit" value="Submit">
+             }
+        </div>
+        <br />
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="map_canvas" style="width: 480px; height: 320px;"></div>
+            <p class="address">111 W Main St</p>
+            <p class="address">Kent, OH 44444</p>
+            <br/>
+            <p class="address">Sales: 111-111-1111</p>
+            <p class="address">Service: 111-111-1112</p>
+        </div>
+    </div>
+</div>
+

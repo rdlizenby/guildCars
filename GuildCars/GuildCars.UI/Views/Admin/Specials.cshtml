@@ -1,0 +1,93 @@
+﻿@model GuildCars.UI.Models.ViewModels.SpecialsVM
+
+@{
+    ViewBag.Title = "Specials";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<h2>Specials</h2>
+
+@using (Html.BeginForm("Specials", "Admin", FormMethod.Post, new { @class = "form form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary();
+    <div class="row" style="border:solid 1px black">
+        <div class="col-lg-6" style="margin:10px 10px">
+            <div class="form-group" style="padding-top:10px;padding-bottom:10px">
+                <label for="newMake" style="padding-left:10px">Special Title</label>
+                @Html.TextBoxFor(m => m.NewSpecial.SpecialName, new { @class = "form-control" })
+            </div>
+            <div class="form-group" style="padding-top:10px;padding-bottom:10px">
+                <label for="newMake" style="padding-left:10px">Description</label>
+                @Html.TextAreaFor(m => m.NewSpecial.SpecialDescription, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Special Banner (1500x425):</label>
+                @Html.TextBoxFor(m => m.UploadedFile, new { type = "file", @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+        <div class="col-lg-6"></div>
+    </div>
+}
+<div id="dialog-confirm" title="Confirmation" style='display:none'>
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0"></span>Are you sure you want to delete this special?</p>
+</div> 
+<br />
+@foreach (var s in Model.Specials)
+{
+    <div class="col-md-12" >
+        <div class="row special" style="border:solid 1px black">
+            <div class="col-md-2 "><img src="~/images/dollar-sign.jpg" class="dollar" /></div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>@s.SpecialName</h3>
+                    </div>
+                    <div class="col-sm-1" style="padding-top:8px">
+                    <button type="button" class="btn btn-danger" style="float:right;" onclick="DeleteSpecial(@s.SpecialId)">DELETE</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>@s.SpecialDescription</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img height="60" src="~/images/@s.ImageFileName" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        function DeleteSpecial(specialId) {
+            $(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        "Delete this special": function () {
+                            $(this).dialog("close");
+                            $.ajax({
+                                type: 'DELETE',
+                                url: 'http://localhost:59796/admin/deleteSpecial/' + specialId,
+                                success: function () {
+                                    window.location.replace("http://localhost:59796/admin/specials");
+                                }
+                            });
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+}

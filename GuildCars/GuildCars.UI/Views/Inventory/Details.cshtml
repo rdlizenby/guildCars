@@ -1,0 +1,68 @@
+﻿@model GuildCars.Models.ViewModels.CarDetailVM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<h2>Vehicle Details</h2>
+
+<br>
+<div class="car-detail-box row">
+    <div class="col-md-2"><strong>@Model.Year @Model.Make @Model.Model</strong><img src="~/@Model.ImageFileName" class="featuredListingImage" /></div>
+    <div class="col-md-10">
+        <div class="tg-wrap">
+            <table class="tg">
+                <tr>
+                    <td class="tg-0ord" style="width:16%"><strong>Body Style: </strong></td>    
+                    <td class="tg-yw4l" style="width:16%">@Model.BodyStyle</td>   
+                    <td class="tg-lqy6" style="width:16%"><strong>Interior: </strong></td>                       
+                    <td class="tg-yw4l" style="width:34%">
+                    @foreach (var c in Model.InteriorColor)
+                    {
+                        <text>@c</text>;
+                    }
+                    </td>  
+                    <td class="tg-lqy6" style="width:9%"><strong>Sale Price: </strong></td>                        
+                    <td class="tg-yw4l" style="width:9%">@Model.SalePrice.ToString("C")</td>                        
+                </tr>               
+                <tr>                   
+                    <td class="tg-lqy6"><strong>Trans:</strong></td>                  
+                    <td class="tg-yw4l">@Model.TransmitionType</td>                   
+                    <td class="tg-lqy6"><strong>Mileage: </strong></td>                
+                    <td class="tg-yw4l">@Model.Milage.ToString("###,###")</td>                  
+                    <td class="tg-lqy6"><strong>MSRP: </strong></td>                   
+                    <td class="tg-yw4l">@Model.Msrp.ToString("C")</td>
+                </tr>                
+                <tr>             
+                    <td class="tg-lqy6"><strong>Color: </strong></td>                   
+                    <td class="tg-yw4l">
+                        @foreach (var c in Model.ExteriorColor)
+                        {
+                            <text>@c</text>;
+                        }
+                    </td>                 
+                    <td class="tg-lqy6"><strong>VIN#: </strong></td>                   
+                    <td class="tg-yw4l">@Model.Vin</td>                   
+                    <td class="tg-yw4l" colspan="2" style="text-align:center">
+                        @{
+                            if (Model.IsSold == false)
+                            {
+                                <input type="button" title="Contact Us" value="Contact Us" onclick="location.href='@Url.Action("Contact", "Home", new { vin = Model.Vin })'" />
+                            }
+                            else
+                            {
+                               <h2 style="color:red">SOLD</h2>
+                            }
+                         }
+                    </td>                    
+                </tr> 
+                <tr>
+                    <td colspan="1" class="tg-lqy6"><strong>Description:</strong></td>
+                    <td colspan="5">@Model.Description</td>
+                </tr>
+            </table>
+        </div>     
+    </div>
+</div>'
+

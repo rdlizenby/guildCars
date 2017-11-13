@@ -1,0 +1,39 @@
+﻿@model GuildCars.Models.ViewModels.HomeIndexVM
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<div class="container">
+    <a href="~/home/specials"><div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="~/images/guildCars.jpg" alt="Dealership Logo">
+            </div>
+            @foreach (var special in Model.Specials)
+            {              
+                <div class="item">  
+                    <img src="~/images/@special.ImageFileName" alt="Special @special.SpecialId">
+                </div>
+            }
+        </div>
+    </div></a>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Featured Vehicles</h3>
+            @foreach (var car in Model.CarShorts)
+            {
+                <a href="~/inventory/details/@car.CarId">
+                    <div class="col-xs-12 col-sm-4 col-md-3 featuredDiv">
+                            <img src="~/@car.ImageFileName" class="featuredListingImage"/>
+                        <p class="featuredListing">@car.Year @car.Make @car.Model</p>
+                        <p class="featuredListing">@car.SalePrice.ToString("c")</p>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>

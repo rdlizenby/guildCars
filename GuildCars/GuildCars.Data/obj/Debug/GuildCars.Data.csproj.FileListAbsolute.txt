@@ -1,0 +1,8 @@
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Data.dll
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Data.pdb
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Models.dll
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Models.pdb
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.csprojResolveAssemblyReference.cache
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.csproj.CoreCompileInputs.cache
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.dll
+C:\Users\Rorie\Documents\bitbucket\rorie-lizenby-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.pdb

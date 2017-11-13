@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GuildCars</title>
+    @System.Web.Optimization.Styles.Render("~/Content/css")
+    @System.Web.Optimization.Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/Home/Index">
+                    <i class="icon-large icon-car icon-white"></i>
+                </a>           
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("New Inventory", "New", "Inventory")</li>
+                    <li>@Html.ActionLink("Used Inventory", "Used", "Inventory")</li>
+                    <li>@Html.ActionLink("Specials", "Specials", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("sales"))
+                    {
+                        <li>@Html.ActionLink("Sales", "Index", "Sales")</li>
+                    }
+                    @if (Request.IsAuthenticated && (User.IsInRole("admin")))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Admin
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Inventory", "Vehicles", "Admin")</li>
+                                <li>@Html.ActionLink("Users", "Users", "Admin")</li>
+                                <li>@Html.ActionLink("Makes", "Makes", "Admin")</li>
+                                <li>@Html.ActionLink("Models", "Models", "Admin")</li>
+                                <li>@Html.ActionLink("Specials", "Specials", "Admin")</li>
+                                <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3q-iTJlxS-q75GejenKMIFQ7WdKTCvA0&callback=initMap"
+        type="text/javascript"></script>
+<script type="text/javascript">
+
+   $(document).ready(function () {
+     initialize();
+   });
+   function initialize() {
+     var mapOptions = {
+         center: new google.maps.LatLng(38.254008, -85.748407),
+       zoom: 10,
+       mapTypeId: google.maps.MapTypeId.ROADMAP
+     };
+     var map = new google.maps.Map(document.getElementById("map_canvas"),
+       mapOptions);
+     // create a marker
+     var latlng = new google.maps.LatLng(38.254008, -85.748407);
+     var marker = new google.maps.Marker({
+       position: latlng,
+       map: map,
+       title: 'Guild Cars'
+     });
+   }
+</script> 

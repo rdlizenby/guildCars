@@ -1,0 +1,59 @@
+﻿@model GuildCars.UI.Models.ViewModels.EditUserVM
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Edit User</h2>
+    @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
+    {
+        @Html.ValidationSummary();
+        @Html.HiddenFor(m => m.user.UserId);
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    @Html.TextBoxFor(m => m.user.FirstName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    @Html.TextBoxFor(m => m.user.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewPassword)
+                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    @Html.TextBoxFor(m => m.user.LastName, new { @class = "form-control" })
+                </div>
+                <div class="form-group" style="width:120px">
+                    <label>Role</label>
+                    <select name="user.RoleName" class="form-control">
+                        <option value="admin">admin</option>
+                        <option value="sales">sales</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                 </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <input type="submit" value="Save" class="btn btn-default" id="save-button">
+    }
+</div>
+
+@section scripts {
+    <script>
+
+    </script>
+}
+

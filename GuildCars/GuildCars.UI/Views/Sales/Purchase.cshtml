@@ -1,0 +1,121 @@
+﻿@model GuildCars.UI.Models.ViewModels.SalesVM
+
+@{
+    ViewBag.Title = "Purchase";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<h2>Purchase Vehicle</h2>
+
+<br>
+<div class="container">
+    <div class="car-detail-box row">
+        <div class="col-md-2"><strong>@Model.CarDetailVM.Year @Model.CarDetailVM.Make @Model.CarDetailVM.Model</strong><img src="~/@Model.CarDetailVM.ImageFileName" class="featuredListingImage" /></div>
+        <div class="col-md-10">
+            <div class="tg-wrap">
+                <table class="tg">
+                    <tr>
+                        <td class="tg-0ord" style="width:16%"><strong>Body Style: </strong></td>
+                        <td class="tg-yw4l" style="width:16%">@Model.CarDetailVM.BodyStyle</td>
+                        <td class="tg-lqy6" style="width:16%"><strong>Interior: </strong></td>
+                        <td class="tg-yw4l" style="width:34%">
+                            @foreach (var c in Model.CarDetailVM.InteriorColor)
+                            {
+                                <text>@c</text>;
+                            }
+                        </td>
+                        <td class="tg-lqy6" style="width:9%"><strong>Sale Price: </strong></td>
+                        <td class="tg-yw4l" style="width:9%">@Model.CarDetailVM.SalePrice.ToString("C")</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-lqy6"><strong>Trans:</strong></td>
+                        <td class="tg-yw4l">@Model.CarDetailVM.TransmitionType</td>
+                        <td class="tg-lqy6"><strong>Mileage: </strong></td>
+                        <td class="tg-yw4l">@Model.CarDetailVM.Milage.ToString("###,###")</td>
+                        <td class="tg-lqy6"><strong>MSRP: </strong></td>
+                        <td class="tg-yw4l">@Model.CarDetailVM.Msrp.ToString("C")</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-lqy6"><strong>Color: </strong></td>
+                        <td class="tg-yw4l">
+                            @foreach (var c in Model.CarDetailVM.ExteriorColor)
+                            {
+                                <text>@c</text>;
+                            }
+                        </td>
+                        <td class="tg-lqy6"><strong>VIN#: </strong></td>
+                        <td class="tg-yw4l">@Model.CarDetailVM.Vin</td>
+                        <td class="tg-yw4l" colspan="2" style="text-align:center"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="tg-lqy6"><strong>Description:</strong></td>
+                        <td colspan="5">@Model.CarDetailVM.Description</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+    <h2>Sales Information</h2>
+    @using (Html.BeginForm("Purchase", "Sales", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(m => m.CarDetailVM.CarId);
+        <div class="row" style="border-bottom:2px solid black">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    @Html.TextBoxFor(m => m.Buyer.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    @Html.TextBoxFor(m => m.Buyer.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="street1">Street 1</label>
+                    @Html.TextBoxFor(m => m.Buyer.Street1, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    @Html.TextBoxFor(m => m.Buyer.City, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">Zip Code</label>
+                    @Html.TextBoxFor(m => m.Buyer.ZipCode, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    @Html.TextBoxFor(m => m.Buyer.Phone, new { @class = "form-control", type="tel" })
+                </div>
+                <br /><br /><br /><br />
+                <div class="form-group">
+                    <label for="street2">Street 2</label>
+                    @Html.TextBoxFor(m => m.Buyer.Street2, new { @class = "form-control" })
+                </div>
+                <div class="form-group" style="width:80px">
+                    <label>State</label>
+                    @Html.DropDownListFor(m => m.Buyer.StateId, Model.States, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <br/>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="purchasePrice">Purchase Price</label>
+                    @Html.TextBoxFor(m => m.CarDetailVM.PurchasePrice, new { @class = "form-control" })
+                </div>
+                <input type="submit" value="Save">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" style="width:200px">
+                    <label>Purchase Type</label>
+                    @Html.DropDownListFor(m => m.CarDetailVM.PurchaseTypeId, Model.PurchaseTypes, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

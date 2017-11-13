@@ -1,0 +1,86 @@
+﻿@model GuildCars.UI.Models.ViewModels.SalesReportVM
+
+@{
+    ViewBag.Title = "Sales";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<h2>Sales Report</h2>
+<div>
+    <form class="form-inline">
+        <div class="row" style="border:solid 1px black">
+            <div class="form-group">
+                <label for="makes">User</label>
+                @Html.DropDownListFor(m => m.UserId, Model.Users, "select user", new { @class = "form-control", id="selected-user" })
+            </div>
+            <div class="form-group" style="padding-top:10px;padding-bottom:10px">
+                <label for="newMake" style="padding-left:10px">From Date</label>
+                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", type = "date", id="start-date", @Value = Model.StartDate.ToString("yyyy-MM-dd") })
+            </div>
+            <div class="form-group" style="padding-top:10px;padding-bottom:10px">
+                <label for="newMake" style="padding-left:10px">To Date</label>
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", type = "date", id="end-date", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
+            </div>
+            <button type="button" onclick="filterResults()" class="btn btn-default">Search</button>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div id="results-table">
+
+            </div>
+        </div>
+        <div class="col-md-7">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script>
+    function filterResults() {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:59796/x/y',
+            data: JSON.stringify({
+                userId: $('#selected-user').val(),
+                startDate: $('#start-date').val(),
+                endDate: $('#end-date').val(),
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json',
+            success: function (userArray) {
+                $('#results-table').empty();
+
+                if (userArray.length === 0) {
+                    $('#results-table').append('No Results');
+                }
+                else {
+                    var row = '<table class=' + '"table table- striped"' + "><tr><th>User</th><th>Total Sales</th><th>Total Vehicles</th></tr></thead ><tbody>";
+
+                    $.each(userArray, function (index, user) {
+
+                        row += '<tr><td>' + user.firstName + " " + user.lastName + '</td>';
+                        row += '<td>' + user.totalSales + '</td>';
+                        row += '<td>' + user.totalVehicles + '</td>';
+
+                    });
+                    row += '</tr></tbody></table >'
+                    $('#results-table').append(row);
+
+                }
+            },
+            error: function () {
+                $('#errorMessages')
+                    .append($('<li>')
+                        .attr({ class: 'list-group-item list-group-item-danger' })
+                        .text('Error calling web service. Please try again later.'));
+            }
+        })
+    }
+</script>
+}

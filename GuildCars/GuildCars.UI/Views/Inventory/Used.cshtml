@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Used";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Used Vehicles</h2>
+    <form class="search-form">
+        <p style="text-align:left"><strong>Quick Search</strong></p>
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-12">
+                <input type="text" class="form-control" id="search-term" placeholder="Enter make, model, or year">
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="form-group form-inline col-lg-4 col-md-12">
+                <label>Price</label>
+                <select class="form-control" id="min-price">
+                    <option value="0">No Min</option>
+                    <option value="5000">$5,000</option>
+                    <option value="7500">$7,500</option>
+                    <option value="12500">$12,500</option>
+                    <option value="15000">$15,000</option>
+                    <option value="17500">$17,500</option>
+                    <option value="20000">$20,000</option>
+                    <option value="25000">$25,000</option>
+                    <option value="30000">$30,000</option>
+                    <option value="35000">$35,000</option>
+                    <option value="40000">$40,000</option>
+                    <option value="50000">$50,000</option>
+                    <option value="60000">$60,000</option>
+                </select>
+                <select class="form-control" id="max-price">
+                    <option value="2000000">No Max</option>
+                    <option value="5000">$5,000</option>
+                    <option value="7500">$7,500</option>
+                    <option value="12500">$12,500</option>
+                    <option value="15000">$15,000</option>
+                    <option value="17500">$17,500</option>
+                    <option value="20000">$20,000</option>
+                    <option value="25000">$25,000</option>
+                    <option value="30000">$30,000</option>
+                    <option value="35000">$35,000</option>
+                    <option value="40000">$40,000</option>
+                    <option value="50000">$50,000</option>
+                    <option value="60000">$60,000</option>
+                </select>
+            </div>
+            <div class="form-group form-inline col-lg-4 col-md-12">
+                <label>Year</label>
+                <select class="form-control" id="min-year">
+                    <option value="0">No Min</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+                <select class="form-control" id="max-year">
+                    <option value="20000">No Max</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" class="btn btn-default" onclick="usedSearch()" style="width:25%">Search</button>
+    </form>
+    <div id="search-result-div"></div>
+</div>
+
+
+<script>
+    function usedSearch() {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:59796/search/used',
+            data: JSON.stringify({
+                searchTerm: $('#search-term').val(),
+                minPrice: $('#min-price').val(),
+                maxPrice: $('#max-price').val(),
+                minYear: $('#min-year').val(),
+                maxYear: $('#max-year').val()
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json',
+            success: function (carArray) {
+                $('#search-result-div').empty();
+                if (carArray.length === 0) {
+                    $('#search-result-div').append('No Results');
+                }
+                else {
+                    $.each(carArray, function (index, car) {
+                        var row = '<br><div class="car-detail-box row">';
+                        row += '<div class="col-md-2"><strong>' + car.year.toString() + ' ' + car.make + ' ' + car.model + ' ' + '</strong><img src = "../' + car.imageFileName + '" class = "featuredListingImage"/></div>'
+                        row += '<div class="col-md-10">';
+
+                        row += '<div class="tg-wrap" > <table class="tg">';
+                        row += '<tr>';
+                        row += '<td class="tg-0ord" style = "width:16%" ><strong>Body Style: </strong></th>';
+                        row += '<td class="tg-yw4l" style = "width:16%">' + car.bodyStyle + '</th>';
+                        row += '<td class="tg-lqy6" style = "width:16%"><strong>Interior: </strong></th>';
+                        row += '<td class="tg-yw4l" style = "width:34%">';
+                        for (index = 0; index < car.interiorColor.length; ++index) {
+                            row += car.interiorColor[index] + " "
+                        };
+                        row += '</th>';
+                        row += '<td class="tg-lqy6" style = "width:9%"><strong>Sale Price: </strong></th>';
+                        row += '<td class="tg-yw4l" style = "width:9%">$' + numberWithCommas(car.salePrice) + '</th>';
+                        row += '</tr>';
+                        row += '<tr>';
+                        row += '<td class="tg-lqy6"><strong>Trans:</strong></td>';
+                        row += '<td class="tg-yw4l">' + car.transmitionType + '</td>';
+                        row += '<td class="tg-lqy6"><strong>Mileage: </strong></td>';
+                        row += '<td class="tg-yw4l">' + numberWithCommas(car.milage) + '</td>';
+                        row += '<td class="tg-lqy6"><strong>MSRP: </strong></td>';
+                        row += '<td class="tg-yw4l">$' + numberWithCommas(car.msrp) + '</td>';
+                        row += '</tr>';
+                        row += '<tr>';
+                        row += '<td class="tg-lqy6"><strong>Color: </strong></td>';
+                        row += '<td class="tg-yw4l">';
+                        for (index = 0; index < car.exteriorColor.length; ++index) {
+                            row += car.exteriorColor[index] + " "
+                        };
+                        row += '</th>';
+                        row += '<td class="tg-lqy6"><strong>VIN#: </strong></td>';
+                        row += '<td class="tg-yw4l">' + car.vin + '</td>';
+                        row += '<td class="tg-yw4l" colspan="2" style="text-align:center"><a href="Details/' + car.carId + '"><button type="button" class="btn btn-secondary btn-lg">Details</button></a></td>';
+                        row += '</tr>'
+                        row += '</table></div >'
+                        row += '</div></div>';
+
+                        $('#search-result-div').append(row);
+                    });
+                }
+            },
+            error: function () {
+                $('#errorMessages')
+                    .append($('<li>')
+                        .attr({ class: 'list-group-item list-group-item-danger' })
+                        .text('Error calling web service. Please try again later.'));
+            }
+        })
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+</script>
+
